@@ -1,24 +1,22 @@
-const cors = require("cors");
 const express = require("express");
-
 const app = express();
-require("dotenv").config();
+const PORT = process.env.PORT || 8081;
+const warehouseRoutes = require("./routes/warehouseRoutes");
 
-const port = process.env.PORT;
 app.use(express.json());
 
-app.use(cors());
-// app.get();
-// app.get();
-// app.get();
-// app.get();
-// app.post();
-// app.post();
-// app.put();
-// app.put();
-// app.delete();
-// app.delete();
+const cors = require("cors");
 
-app.listen(port, () => {
-  console.log(`app is listening on port ${port}`);
+app.use(express.static("public"));
+app.use(cors());
+
+app.use((req, res, next) => {
+  console.log(
+    `Incoming request:  ${req.path},  Host: ${req.hostname} / IP: ${req.ip}`
+  );
+  next();
 });
+
+app.use("/warehouses", warehouseRoutes);
+
+app.listen(PORT, () => {});
