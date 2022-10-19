@@ -102,10 +102,5 @@
       "phone": "+1 (646) 123-1234",
       "email": "vmendoza@instock.com"
     }
-  },
-  {
-    "id": "f2ab34f4297527dc188ec5c82a23ba2d",
-    "name": "Warehouse 1",
-    "contact": { "name": "Bob" }
   }
 ]
