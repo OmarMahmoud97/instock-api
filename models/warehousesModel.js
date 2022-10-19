@@ -12,9 +12,7 @@ const editWarehouseDetails = (params, body) => {
   const warehouses = helpers.getWarehouses();
   const id = params.warehouseID;
 
-  let selectedWarehouseIndex = warehouses.findIndex(
-    (warehouse) => warehouse.id === id
-  );
+  const selectedWarehouseIndex = helpers.getSelectedWarehouse(id);
 
   warehouses[selectedWarehouseIndex] = {
     id: id,
