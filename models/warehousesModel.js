@@ -8,6 +8,30 @@ const getAllWarehouses = () => {
   return warehouses;
 };
 
+const editWarehouseDetails = (params, body) => {
+  const warehouses = helpers.getWarehouses();
+  const id = params.warehouseID;
+
+  const selectedWarehouseIndex = helpers.getSelectedWarehouse(id);
+
+  warehouses[selectedWarehouseIndex] = {
+    id: id,
+    name: body.name,
+    address: body.address,
+    city: body.city,
+    country: body.country,
+    contact: {
+      name: body.contact.name,
+      position: body.contact.position,
+      phone: body.contact.phone,
+      email: body.contact.email,
+    },
+  };
+
+  fs.writeFileSync("./data/warehouses.json", JSON.stringify(warehouses));
+  return warehouses;
+};
+
 const addWarehouse = (warehouse) => {
   // Get all warehouses
   const warehouses = helpers.getWarehouses();
@@ -35,4 +59,32 @@ const addWarehouse = (warehouse) => {
   return warehouses;
 };
 
-module.exports = { getAllWarehouses, addWarehouse };
+const getSingleWarehouse = (warehouseID) => {
+  const warehouses = helpers.getWarehouses();
+
+  const warehouse = warehouses.find((warehouse) => {
+    return warehouse.id === warehouseID;
+  });
+
+  return warehouse;
+};
+
+// single warehouse inventory
+const getWarehouseInventory = (warehouseID) => {
+  const inventory = helpers.getInventories();
+  const inventoryItems = inventory.filter((inventory) => {
+    return inventory.warehouseID === warehouseID;
+  });
+  console.log(inventoryItems);
+  console.log(inventoryItems.length);
+
+  return inventoryItems;
+};
+
+module.exports = {
+  getAllWarehouses,
+  addWarehouse,
+  editWarehouseDetails,
+  getSingleWarehouse,
+  getWarehouseInventory,
+};
